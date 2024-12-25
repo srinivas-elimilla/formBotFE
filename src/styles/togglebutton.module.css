@@ -1,0 +1,38 @@
+.toggleButton {
+  width: 4rem;
+  height: 2rem;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.light {
+  background-color: #b1b1b1;
+}
+
+.light .circle {
+  background-color: #ffffff;
+  transform: translateX(0);
+}
+
+.dark {
+  background-color: #1a5fff;
+  justify-content: flex-end;
+}
+
+.dark .circle {
+  background-color: #ffffff;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}

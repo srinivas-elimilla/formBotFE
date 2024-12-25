@@ -1,0 +1,148 @@
+.dashboard {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid #b1b1b1;
+}
+.togglebtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.navbarLeft {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.dropdown {
+  border: 1px solid lightgray;
+  padding: 5px 10px;
+  margin-right: 10px;
+}
+
+.navbarRight {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 2rem;
+}
+
+.sharebtn {
+  background-color: #1a5fff;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 8rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.subcontent {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 70%;
+  gap: 1rem;
+}
+
+.createFolderBtns {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.createFolderBtn {
+  background-color: #ffffff14;
+  width: 15%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  cursor: pointer;
+}
+.whitebg {
+  background-color: #ffffff;
+  color: #000000eb;
+}
+.darkbg {
+  background-color: #ffffff14;
+  color: #ffffff;
+}
+.addicondark {
+  color: #000000eb;
+}
+
+.createFormBtns {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.typebotbtn {
+  background-color: #1a5fff;
+  color: #ffffff;
+  width: 20%;
+  height: 30vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-direction: column;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+
+.createFormBtn {
+  background-color: #ffffff80;
+  color: #ffffff;
+  width: 20%;
+  height: 30vh;
+  text-align: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+
+.createFormBtn i {
+  position: absolute;
+  top: -2%;
+  right: -2%;
+}
+
+.addtypeboticon {
+  font-size: 3rem;
+}

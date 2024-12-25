@@ -1,0 +1,168 @@
+.container {
+  width: 100%;
+  background-color: #171923;
+}
+
+.navbar {
+  padding: 2.5rem;
+  padding-right: 5rem;
+  padding-left: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo,
+.btns {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.logo img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.logo h1 {
+  font-family: "Outfit", serif;
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.signin,
+.formbot {
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: "Open sans", sans-serif;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.signin {
+  color: #7ea6ff;
+  border: 1px solid #7ea6ff;
+  background-color: transparent;
+}
+
+.formbot {
+  color: #ffffff;
+  border: none;
+  background-color: #1a5fff;
+}
+
+.herosection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.herosection div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.heroheading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.heroheading div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.heroheading div h1 {
+  font-family: "Outfit", sans-serif;
+  font-size: 5rem;
+  background: linear-gradient(130deg, #4b83ff, #b794f4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+p {
+  font-family: "Open sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #ffffff;
+  text-align: justify;
+}
+.herobtn {
+  padding: 1.5rem;
+}
+.heroImage {
+  position: relative;
+  padding: 5rem;
+}
+
+.heroImage div {
+  width: 40rem;
+  height: 40rem;
+  border-radius: 50%;
+  filter: blur(50px);
+}
+
+.heroImage div:first-child {
+  background-color: #e67200;
+}
+
+.heroImage div:last-child {
+  background-color: #0042da;
+}
+
+.heroImage img {
+  position: absolute;
+  left: 8%;
+  top: 10%;
+  z-index: 1;
+}
+
+.footer {
+  padding-bottom: 5rem;
+  margin-top: 10rem;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5rem;
+}
+
+.logosection {
+  margin-top: -0.75rem;
+}
+
+.logosection .logo img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.logosection .logo h1 {
+  font-size: 1rem;
+}
+
+.footer div h1 {
+  font-size: 1.25rem;
+  color: #ffffff;
+  font-weight: 500;
+  font-family: "Outfit", sans-serif;
+}
+
+.footer div div {
+  margin-top: 1rem;
+}
+.footer div div span {
+  color: #ffffff;
+}
+
+.footer div div p {
+  text-decoration: underline;
+  cursor: pointer;
+}
