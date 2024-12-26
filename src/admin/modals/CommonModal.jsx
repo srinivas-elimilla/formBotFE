@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import styles from "../../styles/modal.module.css";
 
-const CreateFolderModal = ({ closeModal }) => {
+const CreateFolderModal = ({
+  closeModal,
+  label,
+  placeholder,
+  isConfirmBtn,
+}) => {
   const [folderName, setFolderName] = useState("");
   const { theme } = useTheme();
 
@@ -28,24 +33,26 @@ const CreateFolderModal = ({ closeModal }) => {
         className={`${styles.modal} ${styles[theme]}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <button className={styles.closeBtn} onClick={closeModal}>
-          X
-        </button>
-        <label className={styles.label}>Create New Folder</label>
-        <input
-          type="text"
-          className={styles.folderInput}
-          value={folderName}
-          onChange={handleFolderNameChange}
-          placeholder="Enter folder name"
-        />
+        <label className={`${styles.label} ${styles[theme]}`}>{label}</label>
+        {placeholder && (
+          <input
+            type="text"
+            className={styles.folderInput}
+            value={folderName}
+            onChange={handleFolderNameChange}
+            placeholder={placeholder}
+          />
+        )}
         <div className={styles.buttons}>
           <button className={styles.doneBtn} onClick={handleDone}>
-            Done
+            {isConfirmBtn ? "Confirm" : "Done"}
           </button>
-          <button className={styles.cancelBtn} onClick={handleCancel}>
+          <div
+            className={`${styles.cancelBtn} ${styles[theme]}`}
+            onClick={handleCancel}
+          >
             Cancel
-          </button>
+          </div>
         </div>
       </div>
     </div>

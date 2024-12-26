@@ -6,14 +6,15 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
-  border-bottom: 1px solid #b1b1b1;
+  border-bottom: 1px solid #47474a;
+  padding: 0.5rem;
 }
 .togglebtn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  margin-right: 10rem;
 }
 
 .navbarLeft {
@@ -23,13 +24,31 @@
   justify-content: flex-end;
 }
 
-.dropdown {
-  border: 1px solid lightgray;
-  padding: 5px 10px;
-  margin-right: 10px;
+select {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: auto;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid #47474a;
+  background-color: transparent;
+}
+select:focus {
+  border: 1px solid #47474a;
+}
+
+select option {
+  padding: 0.5rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 .navbarRight {
+  margin-right: 5rem;
   flex: 1;
   display: flex;
   align-items: flex-end;
@@ -87,6 +106,7 @@
   align-items: center;
   justify-content: space-evenly;
   cursor: pointer;
+  border: 1px solid #47474a;
 }
 .whitebg {
   background-color: #ffffff;
@@ -121,6 +141,8 @@
   flex-direction: column;
   cursor: pointer;
   border-radius: 1rem;
+  font-size: 1rem;
+  font-family: "Open sans", sans-serif;
 }
 
 .createFormBtn {
@@ -135,12 +157,16 @@
   justify-content: center;
   cursor: pointer;
   border-radius: 1rem;
+  border: 1px solid #47474a;
+  font-size: 1rem;
+  font-family: "Open sans", sans-serif;
 }
 
 .createFormBtn i {
   position: absolute;
-  top: -2%;
-  right: -2%;
+  font-size: 1rem;
+  top: 1%;
+  right: 3%;
 }
 
 .addtypeboticon {

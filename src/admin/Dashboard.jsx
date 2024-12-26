@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
-import CreateFolderModal from "./modals/CreateFolderModal";
+import CommonModal from "./modals/CommonModal";
 import styles from "../styles/dashboard.module.css";
 import ThemeToggleButton from "../components/ThemeToggleButton";
 
@@ -10,6 +10,12 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeFolderIndex, setActiveFolderIndex] = useState(null);
+  const [label, setLabel] = useState("");
+  const [placeholder, setPlaceholder] = useState("");
+  const [isConfirmBtn, setIsConfirmBtn] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(
+    "Srinivas Elimilla's workspace"
+  );
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -18,11 +24,26 @@ const Dashboard = () => {
     }
   }, [navigate]);
 
-  const openModal = () => setIsModalOpen(true);
+  const openModal = (label, placeholder, isConfirmBtn) => {
+    setLabel(label);
+    setPlaceholder(placeholder);
+    setIsConfirmBtn(isConfirmBtn);
+    setIsModalOpen(true);
+  };
   const closeModal = () => setIsModalOpen(false);
 
   const handleFolderClick = (index) => {
     setActiveFolderIndex(index === activeFolderIndex ? null : index);
+  };
+
+  const handleOptionChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedOption(selectedValue);
+
+    if (selectedValue === "Logout") {
+      localStorage.removeItem("token");
+      navigate("/");
+    }
   };
 
   const folders = [
@@ -47,7 +68,40 @@ const Dashboard = () => {
     <div className={styles.dashboard}>
       <div className={styles.navbar}>
         <div className={styles.navbarLeft}>
-          <div className={styles.dropdown}>Srinivas's workspace</div>
+          <select
+            className={theme}
+            value={selectedOption}
+            onChange={handleOptionChange}
+            style={{
+              backgroundColor: theme === "dark" ? "#121212" : "#ffffff",
+              color: theme === "dark" ? "#ffffff" : "#47474a",
+            }}
+          >
+            <option
+              value="Srinivas Elimilla's workspace"
+              style={{
+                color: theme === "dark" ? "#ffffff" : "#47474a",
+              }}
+            >
+              Srinivas Elimilla's workspace
+            </option>
+            <option
+              value="Settings"
+              style={{
+                color: theme === "dark" ? "#ffffff" : "#47474a",
+              }}
+            >
+              Settings
+            </option>
+            <option
+              value="Logout"
+              style={{
+                color: "#FFA54C",
+              }}
+            >
+              Logout
+            </option>
+          </select>
         </div>
         <div className={styles.navbarRight}>
           <div className={`${styles.togglebtn}`}>
@@ -61,7 +115,12 @@ const Dashboard = () => {
       <div className={styles.content}>
         <div className={`${styles.subcontent}`}>
           <div className={`${styles.createFolderBtns}`}>
-            <div onClick={openModal} className={styles.createFolderBtn}>
+            <div
+              onClick={() =>
+                openModal("Create New Folder", "Enter folder name", false)
+              }
+              className={styles.createFolderBtn}
+            >
               <i
                 className={`fa fa-folder-plus ${
                   theme === "light" ? styles.addicondark : styles.addiconlight
@@ -96,14 +155,26 @@ const Dashboard = () => {
                 <i
                   className="fa-solid fa-trash-can"
                   style={{ color: "#FF2C62" }}
+                  onClick={() =>
+                    openModal(
+                      "Are you sure you want to delete this folder ?",
+                      "",
+                      true
+                    )
+                  }
                 ></i>
               </div>
             ))}
           </div>
           <div className={`${styles.createFormBtns}`}>
-            <div className={`${styles.typebotbtn}`}>
+            <div
+              className={`${styles.typebotbtn}`}
+              onClick={() =>
+                openModal("Create New Form", "Enter form name", false)
+              }
+            >
               <i
-                className={`fa-solid fa-plus ${styles.addtypeboticon}`}
+                className={`fa-thin fa-plus ${styles.addtypeboticon}`}
                 style={{ color: "#FFFFFF" }}
               ></i>
               Create a typebot
@@ -114,17 +185,37 @@ const Dashboard = () => {
                 key={index}
                 onClick={() => handleNavigateToForm(form)}
               >
-                New Form
+                <span
+                  style={{
+                    color: theme === "light" ? "#000000" : "#FFFFFF",
+                  }}
+                >
+                  {form.name || "New Form"}
+                </span>
                 <i
                   className="fa-solid fa-trash-can"
                   style={{ color: "#FF2C62" }}
+                  onClick={() =>
+                    openModal(
+                      "Are you sure you want to delete this Form ?",
+                      "",
+                      true
+                    )
+                  }
                 ></i>
               </div>
             ))}
           </div>
         </div>
       </div>
-      {isModalOpen && <CreateFolderModal closeModal={closeModal} />}
+      {isModalOpen && (
+        <CommonModal
+          closeModal={closeModal}
+          label={label}
+          placeholder={placeholder}
+          isConfirmBtn={isConfirmBtn}
+        />
+      )}
     </div>
   );
 };

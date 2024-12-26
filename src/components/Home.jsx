@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../styles/home.module.css";
-import logo from "../../public/logo.png";
+import logo from "/logo.png";
 import triangle from "../../src/assets/triangle.png";
 import semicircle from "../../src/assets/semicircle.png";
 import heroImage from "../../src/assets/heroImage.png";
