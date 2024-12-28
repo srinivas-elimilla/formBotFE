@@ -3,7 +3,7 @@ import styles from "../styles/login.module.css";
 import bitriangle from "../assets/bitriangle.png";
 import google from "../assets/google.png";
 import { Link, useNavigate } from "react-router-dom";
-import useAuthStore from "../store/useAuthStore";
+import useAuthStore from "../store/useUserStore";
 import toast from "react-hot-toast";
 
 const Login = () => {

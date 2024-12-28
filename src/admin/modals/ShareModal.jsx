@@ -2,28 +2,32 @@ import React, { useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import styles from "../../styles/modal.module.css";
 
-const ShareModal = ({ closeModal }) => {
+const ShareModal = ({ closeShareModal, workspace }) => {
+  console.log("workspace >>>>>>>>>", workspace);
+
   const { theme } = useTheme();
 
   const handleDone = () => {
     // Handle folder creation logic here
-    closeModal();
+    closeShareModal();
   };
 
   const handleCancel = () => {
-    closeModal();
+    closeShareModal();
   };
+
+  const handleFolderNameChange = () => {};
 
   return (
     <div
-      className={`${styles.modalBackdrop} ${styles[theme]}`}
-      onClick={closeModal}
+      className={`${styles.modalBackdrop} ${styles[theme]} ${styles.shareModal}`}
+      onClick={closeShareModal}
     >
       <div
         className={`${styles.modal} ${styles[theme]}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <button className={styles.closeBtn} onClick={closeModal}>
+        <button className={styles.closeBtn} onClick={closeShareModal}>
           <i className="fa-solid fa-xmark"></i>
         </button>
         <div>
@@ -31,26 +35,27 @@ const ShareModal = ({ closeModal }) => {
             Invite by Email
           </label>
         </div>
-        {placeholder && (
-          <input
-            type="text"
-            className={styles.folderInput}
-            value={folderName}
-            onChange={handleFolderNameChange}
-            placeholder={placeholder}
-          />
-        )}
-        <div className={styles.buttons}>
-          <button className={styles.doneBtn} onClick={handleDone}>
-            {isConfirmBtn ? "Confirm" : "Done"}
-          </button>
-          <div
-            className={`${styles.cancelBtn} ${styles[theme]}`}
-            onClick={handleCancel}
-          >
-            Cancel
-          </div>
+        <input
+          type="text"
+          className={styles.folderInput}
+          // value={folderName}
+          onChange={handleFolderNameChange}
+          placeholder="Enter email id"
+        />
+        <button type="submit" className={styles.inviteBtn}>
+          {/* {loading ? "Logging in..." : "Log In"} */}
+          Send Invite
+        </button>
+
+        <div>
+          <label className={`${styles.label} ${styles[theme]}`}>
+            Invite by link
+          </label>
         </div>
+        <button type="submit" className={styles.inviteBtn}>
+          {/* {loading ? "Logging in..." : "Log In"} */}
+          Copy link
+        </button>
       </div>
     </div>
   );

@@ -1,0 +1,107 @@
+.settingContainer {
+  width: 100%;
+  height: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.formContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+  width: 100%;
+}
+
+.formContainer h1 {
+  font-family: "Open sans", sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 35%;
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.inputContainer i {
+  position: absolute;
+  left: 1rem;
+  color: #aaa;
+  font-size: 1rem;
+}
+
+.inputContainer input {
+  color: #aaa;
+  border: 1px solid #d0d0d0;
+  border-radius: 0.5rem;
+  padding: 1rem 1rem 1rem 2.5rem;
+  font-size: 1rem;
+  width: 100%;
+  background-color: transparent;
+}
+
+.inputContainer input::placeholder {
+  color: #aaa;
+}
+
+.togglePassword {
+  position: absolute;
+  top: 1.25rem;
+  right: 3rem;
+  cursor: pointer;
+  color: #aaa;
+  font-size: 1rem;
+}
+
+.updateBtn {
+  margin-top: 1rem;
+  background-color: #1a5fff;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  width: 100%;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  box-shadow: 0px 4px 6px #e9444b40;
+}
+
+.updateBtn:disabled {
+  background-color: #d0d0d0;
+}
+.updateBtn:enabled:hover {
+  background-color: #0c4fec;
+}
+
+.logout {
+  float: left;
+  cursor: pointer;
+}
+.logout button {
+  all: unset;
+  color: #cf3636;
+  font-size: 1.25rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+.logout button i {
+  margin-right: 1rem;
+}

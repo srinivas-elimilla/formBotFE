@@ -1,28 +1,93 @@
 import React, { useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import styles from "../../styles/modal.module.css";
+import useUserStore from "../../store/useUserStore";
+import toast from "react-hot-toast";
 
-const CreateFolderModal = ({
+const CommonModal = ({
   closeModal,
   label,
   placeholder,
   isConfirmBtn,
+  type,
+  id,
+  folderIndex,
 }) => {
-  const [folderName, setFolderName] = useState("");
+  const [name, setName] = useState("");
   const { theme } = useTheme();
+  const { createNewFolder, createNewForm, deleteFolder, loading } =
+    useUserStore();
 
-  const handleFolderNameChange = (e) => {
-    setFolderName(e.target.value);
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   };
+  console.log("type >>>>>>>>>>", type);
+  console.log("id >>>>>>>>>>", id);
 
-  const handleDone = () => {
-    // Handle folder creation logic here
-    closeModal();
+  const handleDone = async () => {
+    if (type === "folder") {
+      try {
+        const response = await createNewFolder(name);
+        if (response.status === 500) {
+          toast.error(response?.response?.data?.message || "Server error");
+        } else if (response.status === 400) {
+          toast.error(
+            response?.response?.data?.message || "Something wrong!, try again."
+          );
+        } else if (response.status === 201) {
+          toast.success(response?.data?.message || "folder created");
+          closeModal();
+        }
+      } catch (error) {
+        toast.error("something wrong!");
+      }
+    } else {
+      try {
+        const response = await createNewForm(name, folderIndex);
+        if (response.status === 500) {
+          toast.error(response?.response?.data?.message || "Server error");
+        } else if (response.status === 400) {
+          toast.error(
+            response?.response?.data?.message || "Something wrong!, try again."
+          );
+        } else if (response.status === 201) {
+          toast.success(response?.data?.message || "form created");
+          closeModal();
+        }
+      } catch (error) {
+        toast.error("something wrong!");
+      }
+    }
+
+    if (id && type) {
+      if (type === "folder") {
+        try {
+          const response = await deleteFolder(id);
+          if (response.status === 500) {
+            toast.error(response?.response?.data?.message || "Server error");
+          } else if (response.status === 400) {
+            toast.error(
+              response?.response?.data?.message ||
+                "Something wrong!, try again."
+            );
+          } else if (response.status === 201) {
+            toast.success(response?.data?.message || "folder deleted");
+            closeModal();
+          }
+        } catch (error) {
+          toast.error("something wrong!");
+        }
+      }
+    }
   };
 
   const handleCancel = () => {
     closeModal();
   };
+
+  if (loading) {
+    return <div>Loading.....</div>;
+  }
 
   return (
     <div
@@ -38,8 +103,8 @@ const CreateFolderModal = ({
           <input
             type="text"
             className={styles.folderInput}
-            value={folderName}
-            onChange={handleFolderNameChange}
+            value={name}
+            onChange={handleNameChange}
             placeholder={placeholder}
           />
         )}
@@ -59,4 +124,4 @@ const CreateFolderModal = ({
   );
 };
 
-export default CreateFolderModal;
+export default CommonModal;
