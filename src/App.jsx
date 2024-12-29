@@ -5,15 +5,9 @@ import Register from "./components/Register";
 import Dashboard from "./admin/Dashboard";
 import Page404 from "./components/Page404";
 import Settings from "./admin/Settings";
-import useAuthStore from "./store/useUserStore";
-import { useEffect } from "react";
+import FormBot from "./admin/formBot/FormBot";
 
 function App() {
-  const { verifyToken } = useAuthStore();
-
-  useEffect(() => {
-    verifyToken();
-  }, []);
   return (
     <BrowserRouter>
       <Routes>
@@ -22,6 +16,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/settings" element={<Settings />} />
+        <Route path="/dashboard/form" element={<FormBot />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
     </BrowserRouter>

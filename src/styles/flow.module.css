@@ -1,0 +1,170 @@
+.flowContainer {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-y: scroll;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebtns {
+  flex: 0.75;
+  border-radius: 1rem;
+  width: 20%;
+  height: 100vh;
+}
+.sidebtns.dark {
+  border: 1px solid #47474a;
+}
+.sidebtns.light {
+  border: 1px solid #00000029;
+}
+
+.bubblebtns,
+.inputbtns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.bubbles h6,
+.inputs h6 {
+  font-family: "Open sans", sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  padding: 1rem 0 0 1rem;
+}
+
+.bubblebtns button,
+.inputbtns button,
+.elements button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #00000029;
+  border-radius: 0.5rem;
+  color: #47474a;
+  cursor: pointer;
+  font-family: "Open sans", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.bubblebtns.dark button,
+.inputbtns.dark button {
+  background-color: #1f1f23;
+  color: #ffffff;
+}
+.bubblebtns.light button,
+.inputbtns.light button {
+  background-color: #ffffff;
+  color: #1f1f23;
+}
+
+.bubblebtns i {
+  font-size: 1rem;
+  color: #4b83ff;
+}
+
+.inputbtns i {
+  font-size: 1rem;
+  color: #ffa54c;
+}
+
+.elements {
+  height: 100vh;
+  flex: 4;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+  flex-direction: column;
+}
+.elements button {
+  width: 25%;
+  justify-content: center;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+}
+
+.elements.dark button,
+.bubble.dark,
+.input.dark {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.elements.light button,
+.bubble.light,
+.input.light {
+  background-color: #ffffff;
+  color: #18181b;
+}
+
+.bubble,
+.input {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #00000029;
+  border-radius: 0.5rem;
+  color: #47474a;
+  width: 25%;
+  background-color: #18181b;
+}
+.bubble div,
+.input div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.bubble h6,
+.input h6 {
+  font-family: "Open sans", sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.bubble input,
+.input input {
+  border: none;
+  width: 100%;
+  height: 3rem;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #00000029;
+  font-family: "Open sans", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.bubble.dark input,
+.input.dark input {
+  background-color: #1f1f23;
+  color: #ffffff;
+}
+
+.bubble.light input,
+.input.light input {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.error {
+  color: #f55050;
+  font-size: 0.75rem;
+  font-family: "Open sans", sans-serif;
+  font-weight: 600;
+  align-self: self-start;
+}

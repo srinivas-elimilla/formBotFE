@@ -15,14 +15,18 @@ const CommonModal = ({
 }) => {
   const [name, setName] = useState("");
   const { theme } = useTheme();
-  const { createNewFolder, createNewForm, deleteFolder, loading } =
-    useUserStore();
+  const {
+    getAllWorkspaces,
+    createNewFolder,
+    createNewForm,
+    deleteFolder,
+    deleteForm,
+    loading,
+  } = useUserStore();
 
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
-  console.log("type >>>>>>>>>>", type);
-  console.log("id >>>>>>>>>>", id);
 
   const handleDone = async () => {
     if (type === "folder") {
@@ -37,6 +41,7 @@ const CommonModal = ({
         } else if (response.status === 201) {
           toast.success(response?.data?.message || "folder created");
           closeModal();
+          getAllWorkspaces(localStorage.getItem("userId"));
         }
       } catch (error) {
         toast.error("something wrong!");
@@ -58,11 +63,13 @@ const CommonModal = ({
         toast.error("something wrong!");
       }
     }
-
+  };
+  const handleConfirm = async () => {
     if (id && type) {
       if (type === "folder") {
         try {
           const response = await deleteFolder(id);
+          console.log("res >>>>>>", response);
           if (response.status === 500) {
             toast.error(response?.response?.data?.message || "Server error");
           } else if (response.status === 400) {
@@ -70,8 +77,26 @@ const CommonModal = ({
               response?.response?.data?.message ||
                 "Something wrong!, try again."
             );
-          } else if (response.status === 201) {
+          } else if (response.status === 200) {
             toast.success(response?.data?.message || "folder deleted");
+            closeModal();
+          }
+        } catch (error) {
+          toast.error("something wrong!");
+        }
+      } else {
+        try {
+          const response = await deleteForm(folderIndex, id);
+          console.log("res >>>>>>", response);
+          if (response.status === 500) {
+            toast.error(response?.response?.data?.message || "Server error");
+          } else if (response.status === 400) {
+            toast.error(
+              response?.response?.data?.message ||
+                "Something wrong!, try again."
+            );
+          } else if (response.status === 200) {
+            toast.success(response?.data?.message || "form deleted");
             closeModal();
           }
         } catch (error) {
@@ -84,10 +109,6 @@ const CommonModal = ({
   const handleCancel = () => {
     closeModal();
   };
-
-  if (loading) {
-    return <div>Loading.....</div>;
-  }
 
   return (
     <div
@@ -109,9 +130,16 @@ const CommonModal = ({
           />
         )}
         <div className={styles.buttons}>
-          <button className={styles.doneBtn} onClick={handleDone}>
-            {isConfirmBtn ? "Confirm" : "Done"}
-          </button>
+          {isConfirmBtn ? (
+            <button className={styles.doneBtn} onClick={handleConfirm}>
+              Confirm
+            </button>
+          ) : (
+            <button className={styles.doneBtn} onClick={handleDone}>
+              Done
+            </button>
+          )}
+          <button className={styles.doneBtn} onClick={handleDone}></button>
           <div
             className={`${styles.cancelBtn} ${styles[theme]}`}
             onClick={handleCancel}

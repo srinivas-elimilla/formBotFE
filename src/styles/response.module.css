@@ -1,0 +1,36 @@
+.response {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 5rem;
+  gap: 2rem;
+  overflow-x: hidden;
+  overflow-x: scroll;
+}
+
+.counts {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5rem;
+}
+
+.counts div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 5rem;
+  height: 5rem;
+  background-color: #323232;
+  padding: 5rem;
+  border-radius: 2rem;
+  width: 50%;
+}
+
+.counts div p {
+  font-size: 2rem;
+  font-family: "Open sans", sans-serif;
+  font-weight: 600;
+}

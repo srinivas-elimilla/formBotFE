@@ -8,12 +8,14 @@ const useUserStore = create((set) => ({
   token: null,
   loading: false,
   error: null,
+  isTokenVerified: false,
   register: async (formData) => {
     set({ loading: true, error: null });
     try {
       const response = await axios.post(`${apiUrl}/auth/signup`, formData);
       const { user, token } = response.data;
       localStorage.setItem("token", token);
+      localStorage.setItem("userId", user.id);
       set({ user, token, loading: false });
       return response;
     } catch (error) {
@@ -28,10 +30,9 @@ const useUserStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.post(`${apiUrl}/auth/login`, formData);
-      console.log("Login response >>>>>>>>>>", response);
-
       const { user, token } = response.data;
       localStorage.setItem("token", token);
+      localStorage.setItem("userId", user.id);
       set({ user, token, loading: false });
       toast.success("Login successful!");
     } catch (error) {
@@ -44,7 +45,7 @@ const useUserStore = create((set) => ({
   },
   verifyToken: async () => {
     const token = localStorage.getItem("token");
-    if (!token) return;
+    if (!token) return set({ isTokenVerified: true });
 
     set({ loading: true, error: null });
     try {
@@ -53,7 +54,7 @@ const useUserStore = create((set) => ({
       });
 
       const { user } = response.data;
-      set({ user, token, loading: false });
+      set({ user, token, loading: false, isTokenVerified: true });
       return response;
     } catch (error) {
       set({
@@ -63,10 +64,10 @@ const useUserStore = create((set) => ({
       toast.error(error.response?.data?.message);
     }
   },
-  getAllWorkspaces: async () => {
+  getAllWorkspaces: async (id) => {
     set({ loading: true, error: null });
     try {
-      const response = await axios.get(`${apiUrl}/user/all-workspaces`, {
+      const response = await axios.get(`${apiUrl}/user/${id}/all-workspaces`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -84,20 +85,18 @@ const useUserStore = create((set) => ({
     }
   },
   createNewFolder: async (folderName) => {
+    const userId = localStorage.getItem("userId");
     set({ loading: true, error: null });
     try {
       const response = await axios.post(
         `${apiUrl}/user/new-folder`,
-        { folderName },
+        { folderName, userId },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      const { user } = response.data;
-
-      set({ user, loading: false });
       return response;
     } catch (error) {
       set({
@@ -109,18 +108,16 @@ const useUserStore = create((set) => ({
   },
   deleteFolder: async (id) => {
     set({ loading: true, error: null });
+    const userId = localStorage.getItem("userId");
     try {
       const response = await axios.delete(
-        `${apiUrl}/user/delete-folder/${id}`,
+        `${apiUrl}/user/${userId}/${id}/delete-folder`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      const { user } = response.data;
-
-      set({ user, loading: false });
       return response;
     } catch (error) {
       set({
@@ -131,26 +128,43 @@ const useUserStore = create((set) => ({
     }
   },
   createNewForm: async (formName, folderIndex) => {
+    const userId = localStorage.getItem("userId");
     set({ loading: true, error: null });
     try {
       const response = await axios.post(
         `${apiUrl}/user/new-form`,
-        { formName, folderIndex },
+        { userId, formName, folderIndex },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      console.log("response >>>>>>", response);
-
-      const { user } = response.data;
-
-      set({ user, loading: false });
       return response;
     } catch (error) {
       set({
         error: error.response?.data?.message || "creating form is failed.",
+        loading: false,
+      });
+      return error;
+    }
+  },
+  deleteForm: async (folderIndex, formId) => {
+    set({ loading: true, error: null });
+    const userId = localStorage.getItem("userId");
+    try {
+      const response = await axios.delete(
+        `${apiUrl}/user/${userId}/${folderIndex}/${formId}/delete-form`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "deleting form is failed.",
         loading: false,
       });
       return error;

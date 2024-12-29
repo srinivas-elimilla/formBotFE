@@ -8,6 +8,7 @@ import ShareModal from "./modals/ShareModal";
 import toast from "react-hot-toast";
 import { useUpdateSettings } from "../store/settingsStore";
 import useUserStore from "../store/useUserStore";
+import FormBot from "./formBot/FormBot";
 
 const Dashboard = () => {
   const { theme } = useTheme();
@@ -20,19 +21,33 @@ const Dashboard = () => {
   const [type, setType] = useState("");
   const [idToDelete, setIdToDelete] = useState(null);
   const [isConfirmBtn, setIsConfirmBtn] = useState(false);
-  const [selectedWorkspace, setSelectedWorkspace] = useState({});
+  const [selectedWorkspace, setSelectedWorkspace] = useState("");
+  const [folders, setFolders] = useState([]);
+  const [forms, setForms] = useState([]);
 
   const { user, workspaces, getAllWorkspaces } = useUserStore();
-  console.log("user >>>>>>", user);
-
+  // console.log("user >>>>>>", user);
+  const userId = localStorage.getItem("userId");
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
       return navigate("/login");
-    } else {
-      getAllWorkspaces();
+    }
+    if (userId) {
+      getAllWorkspaces(userId);
     }
   }, []);
+
+  useEffect(() => {
+    if (workspaces?.length > 0) {
+      setSelectedWorkspace(workspaces[0].id);
+    }
+    if (selectedWorkspace) {
+      const workspace = workspaces.find((ws) => ws.id === selectedWorkspace);
+      localStorage.setItem("userId", selectedWorkspace);
+      setFolders(workspace?.folders || []);
+    }
+  }, [selectedWorkspace]);
 
   const openModal = (label, placeholder, isConfirmBtn, type, id) => {
     setLabel(label);
@@ -42,7 +57,10 @@ const Dashboard = () => {
     setIdToDelete(id);
     setIsCommonModalOpen(true);
   };
-  const closeModal = () => setIsCommonModalOpen(false);
+  const closeModal = () => {
+    setIsCommonModalOpen(false);
+    getAllWorkspaces(userId);
+  };
 
   const openShareModal = () => {
     setIsShareModalOpen(true);
@@ -51,6 +69,8 @@ const Dashboard = () => {
 
   const handleFolderClick = (index) => {
     setActiveFolderIndex(index === activeFolderIndex ? null : index);
+    const selectedFolder = folders[index];
+    setForms(selectedFolder?.forms || []);
   };
 
   const handleOptionChange = (event) => {
@@ -58,64 +78,64 @@ const Dashboard = () => {
 
     if (selectedValue === "Logout") {
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
       navigate("/");
     } else if (selectedValue === "Settings") {
       navigate("/dashboard/settings");
+    } else {
+      setSelectedWorkspace(selectedValue);
     }
   };
 
-  const forms = [
-    { name: "Folder 1" },
-    { name: "Folder 2" },
-    { name: "Folder 3" },
-    { name: "Folder 4" },
-    { name: "Folder 5" },
-    { name: "Folder 6" },
-  ];
+  const handleNavigateToForm = (form) => {
+    localStorage.setItem("form", JSON.stringify(form));
+
+    navigate("/dashboard/form");
+  };
 
   return (
     <div className={styles.dashboard}>
       <div className={styles.navbar}>
         <div className={styles.navbarLeft}>
-          <select
-            className={theme}
-            value={selectedWorkspace?.name}
-            onChange={handleOptionChange}
-            style={{
-              backgroundColor: theme === "dark" ? "#121212" : "#ffffff",
-              color: theme === "dark" ? "#ffffff" : "#47474a",
-            }}
-          >
-            {workspaces &&
-              workspaces?.map((workspace, index) => (
-                <option
-                  key={index}
-                  value={workspace?.name || ""}
-                  style={{
-                    color: theme === "dark" ? "#ffffff" : "#47474a",
-                  }}
-                  defaultValue={workspace?.name || ""}
-                >
-                  {`${workspace?.name || "Guest"}'s Workspace`}
-                </option>
-              ))}
-            <option
-              value="Settings"
+          {workspaces && (
+            <select
+              className={theme}
+              onClick={handleOptionChange}
               style={{
+                backgroundColor: theme === "dark" ? "#121212" : "#ffffff",
                 color: theme === "dark" ? "#ffffff" : "#47474a",
               }}
             >
-              Settings
-            </option>
-            <option
-              value="Logout"
-              style={{
-                color: "#FFA54C",
-              }}
-            >
-              Logout
-            </option>
-          </select>
+              {workspaces?.map((workspace, index) => (
+                <option
+                  key={index}
+                  value={workspace?.id || ""}
+                  style={{
+                    color: theme === "dark" ? "#ffffff" : "#47474a",
+                  }}
+                  defaultValue={workspace?.id}
+                >
+                  {`${workspace?.name}'s Workspace`}
+                </option>
+              ))}
+              <option
+                value="Settings"
+                style={{
+                  color: theme === "dark" ? "#ffffff" : "#47474a",
+                }}
+              >
+                Settings
+              </option>
+              <option
+                value="Logout"
+                style={{
+                  color: "#FFA54C",
+                }}
+              >
+                Logout
+              </option>
+            </select>
+          )}
         </div>
         <div className={styles.navbarRight}>
           <div className={`${styles.togglebtn}`}>
@@ -149,8 +169,8 @@ const Dashboard = () => {
               ></i>{" "}
               Create a folder
             </div>
-            {user &&
-              user?.workspace?.folders?.map((folder, index) => (
+            {folders &&
+              folders?.map((folder, index) => (
                 <div
                   className={`${styles.createFolderBtn} ${
                     activeFolderIndex === index ? styles.whitebg : styles.darkbg
@@ -203,37 +223,35 @@ const Dashboard = () => {
               ></i>
               Create a typebot
             </div>
-            {user &&
-              user?.workspace?.folders?.[activeFolderIndex]?.forms?.map(
-                (form, index) => (
-                  <div
-                    className={`${styles.createFormBtn}`}
-                    key={index}
-                    // onClick={() => handleNavigateToForm(form)}
+            {forms &&
+              forms?.map((form, index) => (
+                <div
+                  className={`${styles.createFormBtn}`}
+                  key={index}
+                  onClick={() => handleNavigateToForm(form)}
+                >
+                  <span
+                    style={{
+                      color: theme === "light" ? "#000000" : "#FFFFFF",
+                    }}
                   >
-                    <span
-                      style={{
-                        color: theme === "light" ? "#000000" : "#FFFFFF",
-                      }}
-                    >
-                      {form?.formName || "New Form"}
-                    </span>
-                    <i
-                      className="fa-solid fa-trash-can"
-                      style={{ color: "#FF2C62" }}
-                      onClick={() =>
-                        openModal(
-                          "Are you sure you want to delete this Form ?",
-                          "",
-                          true,
-                          "form",
-                          form._id
-                        )
-                      }
-                    ></i>
-                  </div>
-                )
-              )}
+                    {form?.formName || "New Form"}
+                  </span>
+                  <i
+                    className="fa-solid fa-trash-can"
+                    style={{ color: "#FF2C62" }}
+                    onClick={() =>
+                      openModal(
+                        "Are you sure you want to delete this Form ?",
+                        "",
+                        true,
+                        "form",
+                        form._id
+                      )
+                    }
+                  ></i>
+                </div>
+              ))}
           </div>
         </div>
       </div>

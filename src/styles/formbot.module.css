@@ -1,0 +1,103 @@
+.formbot {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #47474a;
+  padding: 1rem;
+}
+.togglebtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-right: 5rem;
+}
+
+.navbarLeft {
+  flex: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbarLeft input {
+  border: none;
+  margin-left: 1rem;
+  border: 1px solid #47474a;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  font-family: "Open sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.navbarRight {
+  margin-right: 4rem;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 2rem;
+}
+.formbotbtns {
+  display: flex;
+  gap: 1rem;
+}
+
+.formbotbtns button {
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  font-family: "Open sans", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.sharebtn,
+.savebtn {
+  color: #ffffff;
+  border: none;
+  border-radius: 0.25rem;
+  width: 4rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+}
+.sharebtn {
+  background-color: #1a5fff;
+}
+.sharebtn:disabled {
+  background-color: #b1b1b1;
+}
+
+.savebtn {
+  background-color: #4ade80cc;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #f55050;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  font-size: 1.5rem;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 100%;
+}
