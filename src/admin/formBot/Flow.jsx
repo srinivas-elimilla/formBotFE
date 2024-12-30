@@ -139,7 +139,7 @@ const Flow = ({ setFormDataToSend }) => {
               <h6>{item.type === "bubble" ? "Bubble" : "Input"}</h6>
               <i
                 className="fa-solid fa-trash-can"
-                style={{ color: "#FF2C62" }}
+                style={{ color: "#FF2C62", cursor: "pointer" }}
                 onClick={() => handleDeleteElement(item.id)}
               ></i>
             </div>

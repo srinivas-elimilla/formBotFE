@@ -6,6 +6,7 @@ import Dashboard from "./admin/Dashboard";
 import Page404 from "./components/Page404";
 import Settings from "./admin/Settings";
 import FormBot from "./admin/formBot/FormBot";
+import SharedForm from "./admin/SharedForm";
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/settings" element={<Settings />} />
         <Route path="/dashboard/form" element={<FormBot />} />
+        <Route
+          path="/form/:userId/:folderIndex/:formId"
+          element={<SharedForm />}
+        />
         <Route path="*" element={<Page404 />} />
       </Routes>
     </BrowserRouter>

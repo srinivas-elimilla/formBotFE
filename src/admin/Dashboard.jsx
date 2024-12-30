@@ -88,6 +88,7 @@ const Dashboard = () => {
   };
 
   const handleNavigateToForm = (form) => {
+    localStorage.setItem("folderIndex", activeFolderIndex);
     localStorage.setItem("form", JSON.stringify(form));
 
     navigate("/dashboard/form");
@@ -225,15 +226,12 @@ const Dashboard = () => {
             </div>
             {forms &&
               forms?.map((form, index) => (
-                <div
-                  className={`${styles.createFormBtn}`}
-                  key={index}
-                  onClick={() => handleNavigateToForm(form)}
-                >
+                <div className={`${styles.createFormBtn}`} key={index}>
                   <span
                     style={{
                       color: theme === "light" ? "#000000" : "#FFFFFF",
                     }}
+                    onClick={() => handleNavigateToForm(form)}
                   >
                     {form?.formName || "New Form"}
                   </span>

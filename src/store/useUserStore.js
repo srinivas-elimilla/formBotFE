@@ -170,6 +170,57 @@ const useUserStore = create((set) => ({
       return error;
     }
   },
+  createNewFormBot: async (elements) => {
+    let userId = localStorage.getItem("userId");
+    let folderIndex = localStorage.getItem("folderIndex");
+    let formId = JSON.parse(localStorage.getItem("form"))._id;
+
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.post(
+        `${apiUrl}/user/form-bot`,
+        { userId, formId, folderIndex, elements },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      set({ loading: false, error: null });
+      return response;
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "creating form-bot is failed.",
+        loading: false,
+      });
+      return error;
+    }
+  },
+  fetchFormBotById: async () => {
+    let userId = localStorage.getItem("userId");
+    let folderIndex = localStorage.getItem("folderIndex");
+    let formId = JSON.parse(localStorage.getItem("form"))._id;
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.get(
+        `${apiUrl}/user/form-bot/${userId}/${folderIndex}/${formId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      const { form } = response.data;
+      set({ form, loading: false, error: null });
+      return response;
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "creating form-bot is failed.",
+        loading: false,
+      });
+      return error;
+    }
+  },
 
   setUser: (user) => set({ user }),
   setToken: (token) => set({ token }),
