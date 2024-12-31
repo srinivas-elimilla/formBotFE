@@ -196,10 +196,10 @@ const useUserStore = create((set) => ({
       return error;
     }
   },
-  fetchFormBotById: async () => {
-    let userId = localStorage.getItem("userId");
-    let folderIndex = localStorage.getItem("folderIndex");
-    let formId = JSON.parse(localStorage.getItem("form"))._id;
+  fetchFormBotById: async (user_Id, folder_Index, form_id) => {
+    let userId = user_Id || localStorage.getItem("userId");
+    let folderIndex = folder_Index || localStorage.getItem("folderIndex");
+    let formId = form_id || JSON.parse(localStorage.getItem("form"))._id;
     set({ loading: true, error: null });
     try {
       const response = await axios.get(
@@ -210,8 +210,9 @@ const useUserStore = create((set) => ({
           },
         }
       );
-      const { form } = response.data;
-      set({ form, loading: false, error: null });
+      const formData = response.data;
+
+      set({ formData, loading: false, error: null });
       return response;
     } catch (error) {
       set({

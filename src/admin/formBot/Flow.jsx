@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/flow.module.css";
 import { useTheme } from "../../context/ThemeContext";
+const form = JSON.parse(localStorage.getItem("form"));
 
 const Flow = ({ setFormDataToSend }) => {
   const { theme } = useTheme();
@@ -40,8 +41,13 @@ const Flow = ({ setFormDataToSend }) => {
   };
 
   useEffect(() => {
-    setFormDataToSend(formData);
+    if (form.elements.length > 0) {
+      setFormData(form.elements);
+    } else {
+      setFormDataToSend(formData);
+    }
   }, [formData]);
+  console.log(error.id);
 
   return (
     <div className={`${styles.flowContainer}`}>
@@ -153,7 +159,10 @@ const Flow = ({ setFormDataToSend }) => {
                   onChange={(e) => handleInputChange(item.id, e.target.value)}
                   required
                   style={{
-                    border: error.id === item.id ? "1px solid #f55050" : "none",
+                    border:
+                      error.id !== undefined && error.id === item.id
+                        ? "1px solid #f55050"
+                        : "none",
                   }}
                 />
                 {error.id === item.id && (

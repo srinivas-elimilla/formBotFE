@@ -56,6 +56,11 @@ const FormBot = () => {
     copy(url);
     toast.success("Link copied");
   };
+  useEffect(() => {
+    if (form.elements.length > 0) {
+      setIsDisableShare(false);
+    }
+  }, []);
 
   return (
     <div className={styles.formbot}>
