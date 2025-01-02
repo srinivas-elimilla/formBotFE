@@ -9,6 +9,7 @@ const useUserStore = create((set) => ({
   loading: false,
   error: null,
   isTokenVerified: false,
+  elements: [],
   register: async (formData) => {
     set({ loading: true, error: null });
     try {
@@ -212,7 +213,12 @@ const useUserStore = create((set) => ({
       );
       const formData = response.data;
 
-      set({ formData, loading: false, error: null });
+      set({
+        elements: formData?.form?.elements,
+        formData,
+        loading: false,
+        error: null,
+      });
       return response;
     } catch (error) {
       set({
@@ -221,6 +227,9 @@ const useUserStore = create((set) => ({
       });
       return error;
     }
+  },
+  setElemetsData: (elements) => {
+    set({ elements });
   },
 
   setUser: (user) => set({ user }),

@@ -79,6 +79,9 @@ const Dashboard = () => {
     if (selectedValue === "Logout") {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
+      localStorage.removeItem("folderIndex");
+      localStorage.removeItem("form");
+      localStorage.removeItem("theme");
       navigate("/");
     } else if (selectedValue === "Settings") {
       navigate("/dashboard/settings");
