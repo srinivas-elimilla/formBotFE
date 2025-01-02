@@ -73,7 +73,7 @@ const FormBot = () => {
               backgroundColor: theme === "dark" ? "#37373E" : "#ffffff",
               color: theme === "dark" ? "#ffffff" : "#47474a",
             }}
-            value={form.formName || ""}
+            value={form?.formName || ""}
             readOnly
           />
           <div className={styles.formbotbtns}>
