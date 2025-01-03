@@ -5,12 +5,19 @@ import { useParams } from "react-router-dom";
 import logo from "../assets/logo.png";
 import send from "../assets/send.svg";
 import { useTheme } from "../context/ThemeContext";
+import toast from "react-hot-toast";
 
 const SharedForm = () => {
   const { theme } = useTheme();
   const params = useParams();
-  const { formData, fetchFormBotById, loading, elements, setElemetsData } =
-    useUserStore();
+  const {
+    formData,
+    fetchFormBotById,
+    loading,
+    elements,
+    setElemetsData,
+    submitForm,
+  } = useUserStore();
   const [answer, setAnswer] = useState("");
 
   // const currInputIndex = elements.find(
@@ -47,9 +54,24 @@ const SharedForm = () => {
   const currInputIndex = elements.findIndex((ele) => {
     return ele.type === "input" && !ele.value;
   });
-  // const elements = formData.form.elements;
-  // console.log("ele >>>>>>>>>>.", elements);
-  console.log("currInputIndex >>>>>>>>>>.", currInputIndex);
+
+  const handleSubmit = () => {
+    let views = 1,
+      starts = 1,
+      completed = true;
+    const res = submitForm(
+      params.userId,
+      params.folderIndex,
+      params.formId,
+      elements,
+      views,
+      starts,
+      completed
+    );
+    if (res) {
+      toast.success("form submitted");
+    }
+  };
 
   return (
     <div className={styles.formContainer}>
@@ -58,7 +80,7 @@ const SharedForm = () => {
           return (
             (index <= currInputIndex || currInputIndex === -1) && (
               <div key={index} className={styles.bubble}>
-                <div style={{ margin: "1rem" }}>
+                <div className={`${styles.bubbleSection}`}>
                   {(element.type === "bubble" ||
                     (element.type === "input" && element.value)) &&
                     (element.value.startsWith("http") ? (
@@ -68,11 +90,25 @@ const SharedForm = () => {
                         style={{ maxWidth: "100%" }}
                       />
                     ) : (
-                      <div className={styles.logImage}>
-                        <img src={logo} alt="admin" />
-                        <p className={`${styles.logImage} ${theme}`}>
-                          {element.value}
-                        </p>
+                      <div className={styles.logoImage}>
+                        {element.type !== "input" ? (
+                          <div
+                            className={`${styles.leftSide} ${styles[theme]}`}
+                          >
+                            <img src={logo} alt="admin" />
+                            <p className={`${styles.logImage} ${theme}`}>
+                              {element.value}
+                            </p>
+                          </div>
+                        ) : (
+                          <div
+                            className={`${styles.rightSide} ${styles[theme]}`}
+                          >
+                            <p className={`${styles.logImage} ${theme}`}>
+                              {element.value}
+                            </p>
+                          </div>
+                        )}
                       </div>
                     ))}
                 </div>
@@ -123,7 +159,9 @@ const SharedForm = () => {
         })}
         <div className={styles.navigationButtons}>
           {currInputIndex === -1 && (
-            <button className={styles.completedButton}>Form Completed!</button>
+            <button className={styles.completedButton} onClick={handleSubmit}>
+              Form Completed!
+            </button>
           )}
         </div>
       </div>

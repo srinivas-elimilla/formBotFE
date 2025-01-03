@@ -41,7 +41,7 @@ const Flow = ({ setFormDataToSend }) => {
   };
 
   useEffect(() => {
-    if (form.elements.length > 0) {
+    if (form?.elements?.length > 0) {
       setFormData(form.elements);
     } else {
       setFormDataToSend(formData);

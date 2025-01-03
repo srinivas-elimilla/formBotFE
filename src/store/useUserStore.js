@@ -231,6 +231,67 @@ const useUserStore = create((set) => ({
   setElemetsData: (elements) => {
     set({ elements });
   },
+  submitForm: async (
+    user_Id,
+    folder_Index,
+    form_id,
+    elements,
+    views,
+    starts,
+    completed
+  ) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.post(`${apiUrl}/response`, {
+        userId: user_Id,
+        folderIndex: folder_Index,
+        formId: form_id,
+        elements,
+        views,
+        starts,
+        completed,
+      });
+      const submittedFormData = response.data;
+
+      set({
+        submittedFormData,
+        loading: false,
+        error: null,
+      });
+      return response;
+    } catch (error) {
+      set({
+        error:
+          error.response?.data?.message || "submitting form-bot is failed.",
+        loading: false,
+      });
+      return error;
+    }
+  },
+  shareWorkspace: async (userId, email, mode) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axios.post(`${apiUrl}/user/share`, {
+        userId,
+        email,
+        mode,
+      });
+      const shared = response.data;
+
+      set({
+        shared,
+        loading: false,
+        error: null,
+      });
+      return response;
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "sharing is failed.",
+        loading: false,
+      });
+      return error;
+    }
+  },
 
   setUser: (user) => set({ user }),
   setToken: (token) => set({ token }),
